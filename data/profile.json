@@ -1,0 +1,202 @@
+{
+  "name": {
+    "first": "Pranay",
+    "last": "Yadagiri",
+    "full": "Pranay Yadagiri"
+  },
+  "email": "pranayyadagiri04@gmail.com",
+  "tagline": "Building scalable Data Engineering pipelines, AI-powered applications with modern web technologies & AI.",
+  "description": "Data Engineering Intern with a growing passion for AI, ML, and Agentic systems, focused on building scalable software solutions.",
+  "roles": {
+    "headline": "Data Engineer & AI Enthusiast",
+    "short": "Data Engineer Trainee · AI Enthusiast ",
+    "detailed": "Data Engineering · AI/ML · Full Stack Development · AI Systems"
+  },
+  "location": {
+    "based": "Hyderabad, India",
+    "availability": "Worldwide"
+  },
+  "available": true,
+  "keywords": [
+    "Data Engineer",
+    "AI Enthusiast",
+    "Software Engineer",
+    "Machine Learning",
+    "Data Science",
+    "Azure Data Factory",
+    "Python Developer",
+    "AI Systems",
+    "Portfolio",
+    "India"
+  ],
+  "bio": "Recent B.Tech graduate in Computer Science (Cyber Security) and currently working as a Data Engineer Trainee at Insight Enterprises. Experienced in building enterprise-grade Azure Data Factory pipelines, metadata-driven ETL frameworks, and scalable data solutions using Azure SQL and ADLS Gen2. Passionate about Data Engineering, AI, Machine Learning, and Full Stack Development, with a focus on designing cloud-native, production-ready applications that solve real-world problems through automation and intelligent systems.",
+  "stats": [
+    { "value": "8.3",  "label": "CGPA" },
+    { "value": "10+", "label": "Projects Completed" },
+    { "value": "AZ-900",   "label": "Certified" }
+  ],
+  "skills": [
+    "Full Stack Engineer",
+    "AI Builder",
+    "Problem Solver",
+    "Data Engineer",
+    "Machine Learning",
+    "TensorFlow",
+    "OpenCV",
+    "React",
+    "Next.js",
+    "Node.js",
+    "Git",
+    "Docker",
+    "Azure",
+    "Azure Data Factory",
+    "Python Dev",
+    "Azure SQL",
+    "ADLS Gen2",
+    "PySpark",
+    "LangChain",
+    "FastAPI"
+  ],
+  "experience": [
+    {
+    "id": 1,
+    "role": "Data Engineer Trainee",
+    "company": "Insight Enterprises",
+    "companyShort": "INSIGHT",
+    "type": "Internship",
+    "location": "Hyderabad, India",
+    "period": "Apr 2026",
+    "periodEnd": "Present",
+    "bullets": [
+      "Completed Microsoft Azure AZ-900 and DP-900 certifications, strengthening expertise in cloud computing, Azure data services, and modern data engineering concepts.",
+      "Researched Power BI Semantic Search in multi-tenant workspaces and developed a proof-of-concept (PoC) to evaluate enterprise search capabilities and metadata discovery.",
+      "Designed and implemented a metadata-driven Azure Data Engineering Pipeline as a personal practice project using Microsoft Fabric, Azure Data Factory, PySpark, Delta Lake, and Medallion Architecture, featuring automated ingestion, reusable notebooks, schema validation, and Bronze-Silver-Gold transformations."
+    ],
+    "desc": "Working as a Data Engineer Trainee in the Data & AI team, gaining hands-on experience with Microsoft Azure and Microsoft Fabric technologies. Completed Azure certifications, researched enterprise Power BI capabilities, developed proof-of-concepts, and independently built a metadata-driven Azure Data Engineering Pipeline to strengthen practical data engineering skills.",
+    "tech": [
+      "Microsoft Fabric",
+      "Azure Data Factory",
+      "PySpark",
+      "Spark SQL",
+      "SQL",
+      "Delta Lake",
+      "Azure Data Lake Gen2",
+      "Data Warehouse",
+      "Python",
+      "Git",
+      "Microsoft Fabric Notebooks",
+      "Pipelines",
+      "Power BI",
+      "AZ-900",
+      "DP-900"
+    ]
+  },
+    {
+    "id": 2,
+    "role": "AI/ML Research Intern",
+    "company": "Quanta People",
+    "companyShort": "QUANTA",
+    "type": "Internship",
+    "location": "Hyderabad, India",
+    "period": "Feb 2026",
+    "periodEnd": "Mar 2026",
+    "bullets": [
+      "Contributed to the development of production-oriented AI applications involving NLP, Computer Vision, Retrieval-Augmented Generation (RAG), Deep Learning, and Vector Databases using Qdrant.",
+      "Developed backend APIs, built AI prototypes, performed model evaluation, prompt engineering, and supported fine-tuning workflows for intelligent applications.",
+      "Worked on live projects including CLAN Notification System using Firebase Cloud Messaging (FCM) and an AI-powered Video Interview System that analyzed candidate posture, speech, communication, and behavioral attributes for automated interview assessment."
+    ],
+    "desc": "Worked on research and development of AI-powered applications using modern machine learning and generative AI technologies. Contributed to production-ready projects involving computer vision, NLP, RAG, vector databases, backend APIs, and intelligent candidate assessment systems.",
+    "tech": [
+      "Python",
+      "Machine Learning",
+      "Deep Learning",
+      "NLP",
+      "Computer Vision",
+      "RAG",
+      "Qdrant",
+      "Vector Database",
+      "FastAPI",
+      "Firebase Cloud Messaging",
+      "REST APIs",
+      "Git"
+    ]
+  }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "title": "EasyFolio",
+      "subtitle": "Portfolio experience with cinematic motion and responsive storytelling.",
+      "type": "Frontend",
+      "desc": "A polished portfolio concept focused on immersive visuals, smooth section transitions, and a clean presentation layer for personal branding.",
+      "tech": ["Next.js", "GSAP", "CSS Modules", "React"],
+      "image": "/assets/project-easyfolio.png",
+      "link": "https://github.com/Pranay777777"
+    },
+    {
+      "id": 2,
+      "title": "Artgenio",
+      "subtitle": "AI-assisted creative tooling for generating and refining visual concepts.",
+      "type": "AI Product",
+      "desc": "A concept project for exploring AI-driven creative workflows, combining prompt-based generation, iteration, and presentation-focused UI patterns.",
+      "tech": ["Python", "AI", "Generative Workflows", "Product Design"],
+      "image": "/assets/project-artgenio.png",
+      "link": "https://github.com/Pranay777777"
+    }
+  ],
+  "publications": [
+    {
+      "id": 1,
+      "title": "Explainable & Adversarially Robust Fileless Malware Detection",
+      "platform": "Research Paper",
+      "year": "2026",
+      "desc": "Engineered a memory-forensics malware detection system using LightGBM, XGBoost, Random Forest, SHAP, and Volatility. Achieved 100% binary classification accuracy with a soft-voting ensemble, reduced features by 73%, and validated robustness against adversarial attacks.",
+      "link": "https://drive.google.com/file/d/1n4BMrdhwDeNtMOLFgMg7RwV65yZL1kZT/view?usp=sharing"
+    }
+  ],
+  "socials": [
+    { "label": "GitHub",    "href": "https://github.com/Pranay777777" },
+    { "label": "LinkedIn",  "href": "https://www.linkedin.com/in/pranay-yadagiri-90bb60362" },
+    { "label": "Instagram", "href": "https://www.instagram.com/x_p.r.a.n.a.y_x?igsh=cDdhMndpaTdzdXhr" }
+  ],
+  "education": [
+    {
+      "institution": "Sreenidhi Institute of Science and Technology (SNIST)",
+      "location": "Hyderabad",
+      "degree": "B.Tech, Computer Science and Engineering (Cyber Security)",
+      "period": "2022 - 2026",
+      "score": "CGPA: 8.3/10"
+    },
+    {
+      "institution": "Resonance Junior College",
+      "location": "Hyderabad",
+      "degree": "Intermediate (MPC)",
+      "period": "2020 - 2022",
+      "score": "87.5%"
+    }
+  ],
+  "resumeSkills": {
+    "Programming": "Python, SQL (MySQL)",
+    "Systems": "Linux (basic commands, file systems, process handling)",
+    "Data Handling": "Data preprocessing, ETL concepts, data validation",
+    "Tools": "Git, Jupyter Notebook, Streamlit, VS Code",
+    "Databases": "MySQL, MongoDB",
+    "Concepts": "Debugging, Root Cause Analysis, System Monitoring (basic), API handling",
+    "Other": "Excel, Documentation, Reporting"
+  },
+  "certifications": [
+    { "title": "Advanced Certification in Artificial Intelligence", "org": "Glowlogics Solutions", "year": "2025" },
+    { "title": "Joy of Computing Using Python", "org": "IIT Madras (NPTEL)", "year": "2024" }
+  ],
+  "responsibility": [
+    {
+      "title": "Documentation Lead",
+      "org": "AI Club, SNIST",
+      "period": "2024 - Present",
+      "bullets": [
+        "Managed technical documentation, reports, and communication for 20+ members.",
+        "Demonstrated strong written and verbal communication — essential for production support roles."
+      ]
+    }
+  ]
+}
