@@ -1,0 +1,34 @@
+name: Uptime
+
+# Hourly check of the live site. Set the repository variable SITE_URL
+# (Settings → Secrets and variables → Actions → Variables) once deployed;
+# until then the job skips cleanly. A failed run makes GitHub email the owner.
+# Note: GitHub pauses scheduled workflows after 60 days without repo activity.
+on:
+  schedule:
+    - cron: '17 * * * *'
+  workflow_dispatch:
+
+permissions: {}
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    timeout-minutes: 3
+    steps:
+      - name: Check SITE_URL responds (2xx, under 10 s)
+        env:
+          SITE_URL: ${{ vars.SITE_URL }}
+        run: |
+          if [ -z "$SITE_URL" ]; then
+            echo "SITE_URL repository variable is not set yet (site not deployed) - skipping."
+            exit 0
+          fi
+          result=$(curl -sS -o /dev/null -L --max-time 10 -w '%{http_code} %{time_total}' "$SITE_URL") || {
+            echo "::error::$SITE_URL did not respond within 10 s"; exit 1; }
+          code=${result%% *}; secs=${result##* }
+          echo "$SITE_URL -> HTTP $code in ${secs}s"
+          case "$code" in
+            2??) ;;
+            *) echo "::error::$SITE_URL returned HTTP $code"; exit 1 ;;
+          esac

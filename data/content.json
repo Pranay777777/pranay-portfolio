@@ -28,6 +28,13 @@
     "muteLabel": "Mute intro video",
     "keysHint": "Use arrow keys"
   },
+  "errorPage": {
+    "eyebrow": "Something went wrong",
+    "title": "This page hit an error.",
+    "body": "It has been reported automatically. Reloading usually fixes it.",
+    "reload": "Reload",
+    "contact": "Still broken? Email me"
+  },
   "experience": {
     "showDetails": "Show details",
     "hideDetails": "Hide details"

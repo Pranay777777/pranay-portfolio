@@ -1,0 +1,80 @@
+/* ── Error fallback (app/error.js + app/global-error.js) ── */
+.wrap {
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 1.1rem;
+  padding: 0 clamp(1.5rem, 8vw, 7rem);
+  background:
+    radial-gradient(ellipse at 75% 30%, color-mix(in srgb, var(--accent) 12%, transparent) 0%, transparent 55%),
+    var(--surface-black);
+  color: var(--text-on-dark);
+  font-family: var(--font-geist-sans), Arial, sans-serif;
+}
+
+.eyebrow {
+  margin: 0;
+  font-size: var(--text-small);
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--accent);
+}
+
+.title {
+  margin: 0;
+  font-size: clamp(2rem, 5vw, 4rem);
+  font-weight: 900;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.body {
+  margin: 0;
+  max-width: 34rem;
+  font-size: var(--text-body);
+  line-height: 1.6;
+  color: color-mix(in srgb, var(--text-on-dark) 70%, transparent);
+}
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 1.2rem;
+  margin-top: 0.6rem;
+}
+
+.reload {
+  min-height: 44px;
+  padding: 0 1.6rem;
+  border: none;
+  border-radius: 999px;
+  background: var(--accent);
+  color: var(--surface-black);
+  font: inherit;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.reload:hover { background: var(--accent-hover); }
+
+.reload:focus-visible,
+.contact:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
+.contact {
+  font-size: 0.8rem;
+  color: color-mix(in srgb, var(--text-on-dark) 70%, transparent);
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
+.contact:hover { color: var(--accent); }
