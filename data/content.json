@@ -23,7 +23,8 @@
   "intro": {
     "unmuteHint": "Tap for sound",
     "unmuteLabel": "Unmute intro video",
-    "muteLabel": "Mute intro video"
+    "muteLabel": "Mute intro video",
+    "keysHint": "Use arrow keys"
   },
   "experience": {
     "showDetails": "Show details",

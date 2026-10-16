@@ -34,6 +34,7 @@ export default function VideoIntro() {
   const nameRef       = useRef(null)
   const roleRef       = useRef(null)
   const scrollRef     = useRef(null)
+  const keysRef       = useRef(null)
   const loaderDoneRef = useRef(false)
 
   // muted state drives icon only - DOM muted property is controlled exclusively via ref
@@ -65,6 +66,7 @@ export default function VideoIntro() {
       .fromTo(nameRef.current,   { opacity: 0, x: -60 }, { opacity: 1, x: 0, duration: 0.9, ease: 'power3.out' }, '-=0.2')
       .fromTo(roleRef.current,   { opacity: 0, y:  20 }, { opacity: 1, y: 0, duration: 0.6, ease: 'power2.out' }, '-=0.4')
       .fromTo(scrollRef.current, { opacity: 0 },         { opacity: 1, duration: 0.5 }, '-=0.1')
+      .fromTo(keysRef.current,   { opacity: 0 },         { opacity: 1, duration: 0.5 }, '<')
     return () => tl.kill()
   }, [])
 
@@ -322,6 +324,15 @@ export default function VideoIntro() {
         <span className={styles.scrollLabel}>Scroll</span>
         <span className={styles.scrollLine} />
       </button>
+
+      {/* 10 - Keyboard hint (desktop only): ↑ / ↓ move one section */}
+      <p ref={keysRef} className={styles.keysHint}>
+        <span className={styles.keyCaps} aria-hidden="true">
+          <kbd className={`${styles.keyCap} ${styles.keyUp}`}>↑</kbd>
+          <kbd className={`${styles.keyCap} ${styles.keyDown}`}>↓</kbd>
+        </span>
+        <span className={styles.keysLabel}>{LABELS.keysHint}</span>
+      </p>
 
       </div>
     </section>

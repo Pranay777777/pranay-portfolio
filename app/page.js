@@ -22,6 +22,7 @@ export default function Home() {
   const busyRef        = useRef(false)
   const tweenRef       = useRef(null)
   const loopOverlayRef = useRef(null)
+  const loaderOpenRef  = useRef(true)
   const [showLoader, setShowLoader] = useState(true)
 
   useEffect(() => {
@@ -112,6 +113,21 @@ export default function Home() {
       goTo(e.detail)
     }
 
+    // Keyboard: ↑ / ↓ (and Page Up / Down) move one section; ← / → do nothing
+    const NEXT_KEYS = ['ArrowDown', 'PageDown']
+    const PREV_KEYS = ['ArrowUp', 'PageUp']
+    function onKeyDown(e) {
+      if (e.altKey || e.ctrlKey || e.metaKey) return
+      const t = e.target
+      if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); return }
+      const dir = NEXT_KEYS.includes(e.key) ? 1 : PREV_KEYS.includes(e.key) ? -1 : 0
+      if (!dir) return
+      e.preventDefault()                              // no native few-pixel scroll
+      if (loaderOpenRef.current || busyRef.current) return
+      goTo(idxRef.current + dir)
+    }
+
     const isMobile = window.matchMedia('(max-width: 767px)').matches
 
     el.addEventListener('wheel',  onWheel,  { passive: false })
@@ -137,6 +153,7 @@ export default function Home() {
     }
     window.addEventListener('footer-loop-back', onFooterLoop)
     window.addEventListener('goto-section', onGotoSection)
+    window.addEventListener('keydown', onKeyDown)
 
     return () => {
       el.removeEventListener('wheel',  onWheel)
@@ -150,6 +167,7 @@ export default function Home() {
       }
       window.removeEventListener('footer-loop-back', onFooterLoop)
       window.removeEventListener('goto-section', onGotoSection)
+      window.removeEventListener('keydown', onKeyDown)
       tweenRef.current?.kill()
     }
   }, [])
@@ -157,7 +175,7 @@ export default function Home() {
   return (
     <>
       {showLoader && (
-        <ScreenLoader onDismiss={() => setShowLoader(false)} />
+        <ScreenLoader onDismiss={() => { loaderOpenRef.current = false; setShowLoader(false) }} />
       )}
 
       {/* Full-screen fade overlay for seamless footer → top loop */}
