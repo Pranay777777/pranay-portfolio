@@ -5,144 +5,171 @@
     "full": "Pranay Yadagiri"
   },
   "email": "pranayyadagiri04@gmail.com",
-  "tagline": "Building scalable Data Engineering pipelines, AI-powered applications with modern web technologies & AI.",
-  "description": "Data Engineering Intern with a growing passion for AI, ML, and Agentic systems, focused on building scalable software solutions.",
+  "tagline": "I build AI agents and data pipelines whose results are measured, not promised.",
+  "description": "Forward Deployed Engineer trainee at Supervity.ai building AI agents and workflow automation, with a data engineering foundation in Microsoft Fabric, PySpark and Delta Lake.",
   "roles": {
-    "headline": "Data Engineer & AI Enthusiast",
-    "short": "Data Engineer Trainee · AI Enthusiast ",
-    "detailed": "Data Engineering · AI/ML · Full Stack Development · AI Systems"
+    "headline": "AI & Data Engineer",
+    "short": "FDE Trainee · Supervity.ai",
+    "detailed": "AI Agents · LLM Evals · Data Engineering · Microsoft Fabric"
   },
   "location": {
-    "based": "Hyderabad, India",
-    "availability": "Worldwide"
+    "based": "Mumbai, India",
+    "availability": "Anywhere — open to relocation"
   },
   "available": true,
   "keywords": [
+    "AI Engineer",
+    "Forward Deployed Engineer",
+    "AI Agents",
+    "LLM Evals",
+    "RAG",
     "Data Engineer",
-    "AI Enthusiast",
-    "Software Engineer",
-    "Machine Learning",
-    "Data Science",
-    "Azure Data Factory",
-    "Python Developer",
-    "AI Systems",
+    "Microsoft Fabric",
+    "PySpark",
+    "Python",
     "Portfolio",
     "India"
   ],
-  "bio": "Recent B.Tech graduate in Computer Science (Cyber Security) and currently working as a Data Engineer Trainee at Insight Enterprises. Experienced in building enterprise-grade Azure Data Factory pipelines, metadata-driven ETL frameworks, and scalable data solutions using Azure SQL and ADLS Gen2. Passionate about Data Engineering, AI, Machine Learning, and Full Stack Development, with a focus on designing cloud-native, production-ready applications that solve real-world problems through automation and intelligent systems.",
+  "bio": "Forward Deployed Engineer trainee at Supervity.ai, training on a team that builds AI agents for client workflows and business-operations automation. Previously a Data Engineer Trainee in Insight Enterprises' Data & AI team, building a multi-agent accelerator that turns business requirements into PySpark notebooks and Power BI semantic models on Microsoft Fabric. Focused on AI systems that can be trusted: projects that measure their own fabrication rate, latency and test coverage instead of promising them. B.Tech CSE (Cyber Security), CGPA 8.3; Microsoft certified in AZ-900, DP-900 and DP-700.",
   "stats": [
-    { "value": "8.3",  "label": "CGPA" },
-    { "value": "10+", "label": "Projects Completed" },
-    { "value": "AZ-900",   "label": "Certified" }
+    {
+      "value": "3",
+      "label": "Microsoft Certs"
+    },
+    {
+      "value": "15",
+      "label": "Public Repos"
+    },
+    {
+      "value": "8.3",
+      "label": "CGPA"
+    }
   ],
   "skills": [
-    "Full Stack Engineer",
-    "AI Builder",
-    "Problem Solver",
-    "Data Engineer",
-    "Machine Learning",
+    "AI Agents",
+    "LLM Evals",
+    "RAG",
+    "MCP",
+    "LangChain",
+    "Prompt Engineering",
+    "Python",
+    "FastAPI",
+    "PySpark",
+    "Microsoft Fabric",
+    "Delta Lake",
+    "Azure Data Factory",
+    "Power BI",
+    "ONNX",
     "TensorFlow",
     "OpenCV",
+    "PostgreSQL",
+    "Docker",
     "React",
     "Next.js",
-    "Node.js",
-    "Git",
-    "Docker",
-    "Azure",
-    "Azure Data Factory",
-    "Python Dev",
-    "Azure SQL",
-    "ADLS Gen2",
-    "PySpark",
-    "LangChain",
-    "FastAPI"
+    "Git"
   ],
   "experience": [
     {
-    "id": 1,
-    "role": "Data Engineer Trainee",
-    "company": "Insight Enterprises",
-    "companyShort": "INSIGHT",
-    "type": "Internship",
-    "location": "Hyderabad, India",
-    "period": "Apr 2026",
-    "periodEnd": "Present",
-    "bullets": [
-      "Completed Microsoft Azure AZ-900 and DP-900 certifications, strengthening expertise in cloud computing, Azure data services, and modern data engineering concepts.",
-      "Researched Power BI Semantic Search in multi-tenant workspaces and developed a proof-of-concept (PoC) to evaluate enterprise search capabilities and metadata discovery.",
-      "Designed and implemented a metadata-driven Azure Data Engineering Pipeline as a personal practice project using Microsoft Fabric, Azure Data Factory, PySpark, Delta Lake, and Medallion Architecture, featuring automated ingestion, reusable notebooks, schema validation, and Bronze-Silver-Gold transformations."
-    ],
-    "desc": "Working as a Data Engineer Trainee in the Data & AI team, gaining hands-on experience with Microsoft Azure and Microsoft Fabric technologies. Completed Azure certifications, researched enterprise Power BI capabilities, developed proof-of-concepts, and independently built a metadata-driven Azure Data Engineering Pipeline to strengthen practical data engineering skills.",
-    "tech": [
-      "Microsoft Fabric",
-      "Azure Data Factory",
-      "PySpark",
-      "Spark SQL",
-      "SQL",
-      "Delta Lake",
-      "Azure Data Lake Gen2",
-      "Data Warehouse",
-      "Python",
-      "Git",
-      "Microsoft Fabric Notebooks",
-      "Pipelines",
-      "Power BI",
-      "AZ-900",
-      "DP-900"
-    ]
-  },
+      "id": 1,
+      "role": "FDE Trainee",
+      "company": "Supervity.ai",
+      "companyShort": "SUPERVITY",
+      "type": "Internship",
+      "location": "Mumbai, India",
+      "period": "Oct 2026",
+      "periodEnd": "Present",
+      "bullets": [
+        "Training as a Forward Deployed Engineer on a team that builds AI agents for client workflows and automates business operations.",
+        "Building an accounts-payable invoice-automation demo as a training project: a multi-agent workflow designed from a business requirements document and governed by company policies."
+      ],
+      "desc": "Forward Deployed Engineer trainee on a team that builds AI agents and workflow automation for client business operations.",
+      "tech": [
+        "AI Agents",
+        "Workflow Automation",
+        "LLMs",
+        "Python"
+      ]
+    },
     {
-    "id": 2,
-    "role": "AI/ML Research Intern",
-    "company": "Quanta People",
-    "companyShort": "QUANTA",
-    "type": "Internship",
-    "location": "Hyderabad, India",
-    "period": "Feb 2026",
-    "periodEnd": "Mar 2026",
-    "bullets": [
-      "Contributed to the development of production-oriented AI applications involving NLP, Computer Vision, Retrieval-Augmented Generation (RAG), Deep Learning, and Vector Databases using Qdrant.",
-      "Developed backend APIs, built AI prototypes, performed model evaluation, prompt engineering, and supported fine-tuning workflows for intelligent applications.",
-      "Worked on live projects including CLAN Notification System using Firebase Cloud Messaging (FCM) and an AI-powered Video Interview System that analyzed candidate posture, speech, communication, and behavioral attributes for automated interview assessment."
-    ],
-    "desc": "Worked on research and development of AI-powered applications using modern machine learning and generative AI technologies. Contributed to production-ready projects involving computer vision, NLP, RAG, vector databases, backend APIs, and intelligent candidate assessment systems.",
-    "tech": [
-      "Python",
-      "Machine Learning",
-      "Deep Learning",
-      "NLP",
-      "Computer Vision",
-      "RAG",
-      "Qdrant",
-      "Vector Database",
-      "FastAPI",
-      "Firebase Cloud Messaging",
-      "REST APIs",
-      "Git"
-    ]
-  }
+      "id": 2,
+      "role": "Data Engineer Trainee",
+      "company": "Insight Enterprises",
+      "companyShort": "INSIGHT",
+      "type": "Internship",
+      "location": "Hyderabad, India",
+      "period": "Apr 2026",
+      "periodEnd": "Sep 2026",
+      "bullets": [
+        "Built a multi-agent accelerator (MCP + Microsoft Fabric) that turns business requirements and source data into KPI definitions, PySpark notebooks, and semantic models and reports, published to Fabric through its REST APIs.",
+        "Researched Power BI semantic search across multi-tenant workspaces and prototyped a semantic-model advisor (pbixray + FastAPI) that surfaces tables, DAX measures and relationships in an interactive dashboard.",
+        "Built an internal résumé-standardisation agent that converts résumés into the company's standard format, and evaluated open-source LLM alternatives to reduce cost and vendor lock-in.",
+        "Worked on Medallion-architecture pipelines with Azure Data Factory, PySpark and Delta Lake; earned Microsoft AZ-900, DP-900 and DP-700."
+      ],
+      "desc": "Data & AI team: built agentic accelerators and AI prototypes on Microsoft Fabric and Power BI, alongside core data engineering work.",
+      "tech": [
+        "MCP",
+        "LLM Agents",
+        "Microsoft Fabric",
+        "PySpark",
+        "Delta Lake",
+        "Azure Data Factory",
+        "Power BI",
+        "FastAPI",
+        "Python",
+        "SQL",
+        "Git"
+      ]
+    },
+    {
+      "id": 3,
+      "role": "AI/ML Research Intern",
+      "company": "Quanta People",
+      "companyShort": "QUANTA",
+      "type": "Internship",
+      "location": "Hyderabad, India",
+      "period": "Feb 2026",
+      "periodEnd": "Mar 2026",
+      "bullets": [
+        "Contributed to AI applications spanning NLP, computer vision, Retrieval-Augmented Generation (RAG) and vector search with Qdrant.",
+        "Developed backend APIs, built AI prototypes, and supported model evaluation, prompt engineering and fine-tuning workflows.",
+        "Worked on live projects including a notification system on Firebase Cloud Messaging and an AI video-interview system that analysed candidate posture, speech and communication for automated assessment."
+      ],
+      "desc": "Research and development of AI applications across computer vision, NLP, RAG and vector databases, plus backend APIs.",
+      "tech": [
+        "Python",
+        "Machine Learning",
+        "Deep Learning",
+        "NLP",
+        "Computer Vision",
+        "RAG",
+        "Qdrant",
+        "FastAPI",
+        "Firebase Cloud Messaging",
+        "REST APIs",
+        "Git"
+      ]
+    }
   ],
   "projects": [
     {
       "id": 1,
-      "slug": "metadata-driven-lakehouse",
-      "title": "Metadata-Driven Lakehouse",
-      "subtitle": "Onboard a new data source with one metadata row, not a new pipeline.",
-      "type": "Data Engineering",
-      "metric": "1.6M rows · 10.1 s on 1 vCPU",
-      "desc": "Config-driven ingestion from Bronze to a Gold star schema with data-quality checks, PII masking, OpenLineage lineage and an audit trail. Apache Arrow benchmarked at 16× Spark throughput on 1M rows; 499 tests, 96% coverage.",
+      "slug": "evidence-grounded-resume-engine",
+      "title": "Evidence-Grounded Résumé Engine",
+      "subtitle": "A résumé generator where every claim must cite verified evidence.",
+      "type": "LLM · Evals",
+      "metric": "0 / 53 bullets fabricated",
+      "desc": "RAG plus an NLI verifier gate cut the fabrication rate of kept bullets from 23% to 0% on a hand-labelled golden set (95% upper bound 7%), and blocks all 34 payloads in its prompt-injection suite. Fabrication is measured, not promised.",
       "tech": [
         "Python",
-        "Delta Lake",
-        "Apache Arrow",
-        "Medallion",
-        "OpenLineage",
-        "PostgreSQL"
+        "RAG",
+        "NLI",
+        "PostgreSQL",
+        "LLM Evals"
       ],
-      "image": "/assets/project-lakehouse.webp",
+      "image": "/assets/project-resume-engine.webp",
       "links": {
-        "code": "https://github.com/Pranay777777/metadata-driven-lakehouse",
-        "log": "https://github.com/Pranay777777/metadata-driven-lakehouse/blob/main/docs/build-log.md"
+        "demo": "https://huggingface.co/spaces/7Pranay77/evidence-grounded-resume-engine",
+        "code": "https://github.com/Pranay777777/evidence-grounded-resume-engine"
       }
     },
     {
@@ -169,27 +196,6 @@
     },
     {
       "id": 3,
-      "slug": "evidence-grounded-resume-engine",
-      "title": "Evidence-Grounded Résumé Engine",
-      "subtitle": "A résumé generator where every claim must cite verified evidence.",
-      "type": "LLM · Evals",
-      "metric": "0 / 53 bullets fabricated",
-      "desc": "RAG plus an NLI verifier gate cut the fabrication rate of kept bullets from 23% to 0% on a hand-labelled golden set (95% upper bound 7%), and blocks all 34 payloads in its prompt-injection suite. Fabrication is measured, not promised.",
-      "tech": [
-        "Python",
-        "RAG",
-        "NLI",
-        "PostgreSQL",
-        "LLM Evals"
-      ],
-      "image": "/assets/project-resume-engine.webp",
-      "links": {
-        "demo": "https://huggingface.co/spaces/7Pranay77/evidence-grounded-resume-engine",
-        "code": "https://github.com/Pranay777777/evidence-grounded-resume-engine"
-      }
-    },
-    {
-      "id": 4,
       "slug": "asl-realtime-inference",
       "title": "Real-Time ASL Recognition",
       "subtitle": "ASL alphabet recognition on CPU that says \"not confident\" instead of guessing.",
@@ -207,6 +213,28 @@
       "links": {
         "demo": "https://huggingface.co/spaces/7Pranay77/asl-alphabet-recognizer",
         "code": "https://github.com/Pranay777777/asl-realtime-inference"
+      }
+    },
+    {
+      "id": 4,
+      "slug": "metadata-driven-lakehouse",
+      "title": "Metadata-Driven Lakehouse",
+      "subtitle": "Onboard a new data source with one metadata row, not a new pipeline.",
+      "type": "Data Engineering",
+      "metric": "1.6M rows · 10.1 s on 1 vCPU",
+      "desc": "Config-driven ingestion from Bronze to a Gold star schema with data-quality checks, PII masking, OpenLineage lineage and an audit trail. Apache Arrow benchmarked at 16× Spark throughput on 1M rows; 499 tests, 96% coverage.",
+      "tech": [
+        "Python",
+        "Delta Lake",
+        "Apache Arrow",
+        "Medallion",
+        "OpenLineage",
+        "PostgreSQL"
+      ],
+      "image": "/assets/project-lakehouse.webp",
+      "links": {
+        "code": "https://github.com/Pranay777777/metadata-driven-lakehouse",
+        "log": "https://github.com/Pranay777777/metadata-driven-lakehouse/blob/main/docs/build-log.md"
       }
     },
     {
@@ -235,9 +263,9 @@
     {
       "id": 1,
       "title": "Explainable & Adversarially Robust Fileless Malware Detection",
-      "platform": "Research Paper",
+      "platform": "Research Paper · Under review",
       "year": "2026",
-      "desc": "Engineered a memory-forensics malware detection system using LightGBM, XGBoost, Random Forest, SHAP, and Volatility. Achieved 100% binary classification accuracy with a soft-voting ensemble, reduced features by 73%, and validated robustness against adversarial attacks.",
+      "desc": "Memory-forensics malware detection using LightGBM, XGBoost, Random Forest, SHAP and Volatility. A soft-voting ensemble reached 100% binary classification accuracy with 73% fewer features, and was validated against adversarial attacks.",
       "link": "https://drive.google.com/file/d/1n4BMrdhwDeNtMOLFgMg7RwV65yZL1kZT/view?usp=sharing"
     }
   ],
@@ -272,17 +300,39 @@
     "Other": "Excel, Documentation, Reporting"
   },
   "certifications": [
-    { "title": "Advanced Certification in Artificial Intelligence", "org": "Glowlogics Solutions", "year": "2025" },
-    { "title": "Joy of Computing Using Python", "org": "IIT Madras (NPTEL)", "year": "2024" }
+    {
+      "title": "Microsoft Certified: Fabric Data Engineer Associate (DP-700)",
+      "org": "Microsoft",
+      "year": "2026"
+    },
+    {
+      "title": "Microsoft Certified: Azure Data Fundamentals (DP-900)",
+      "org": "Microsoft",
+      "year": "2026"
+    },
+    {
+      "title": "Microsoft Certified: Azure Fundamentals (AZ-900)",
+      "org": "Microsoft",
+      "year": "2026"
+    },
+    {
+      "title": "Advanced Certification in Artificial Intelligence",
+      "org": "Glowlogics Solutions",
+      "year": "2025"
+    },
+    {
+      "title": "Joy of Computing Using Python",
+      "org": "IIT Madras (NPTEL)",
+      "year": "2024"
+    }
   ],
   "responsibility": [
     {
       "title": "Documentation Lead",
       "org": "AI Club, SNIST",
-      "period": "2024 - Present",
+      "period": "2024 - 2026",
       "bullets": [
-        "Managed technical documentation, reports, and communication for 20+ members.",
-        "Demonstrated strong written and verbal communication — essential for production support roles."
+        "Managed technical documentation, reports and communication for 20+ members."
       ]
     }
   ]

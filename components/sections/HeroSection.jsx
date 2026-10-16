@@ -193,8 +193,8 @@ export default function HeroSection() {
               <span className={styles.availDot} />
               <span className={styles.availStatus}>{content.hero.availableLabel}</span>
             </div>
-            <p className={styles.locationLine}>Based in {profile.location.based}</p>
-            <p className={styles.locationLine}>Available {profile.location.availability}</p>
+            <p className={styles.locationLine}>{content.hero.basedInPrefix} {profile.location.based}</p>
+            <p className={styles.locationLine}>{content.hero.availablePrefix} {profile.location.availability}</p>
           </div>
         )}
       </div>

@@ -3,20 +3,22 @@
     "tagline": "Portfolio 2026"
   },
   "hero": {
-    "taglineHighlight": "experiences",
-    "freelanceNote": "Available for freelance & full-time opportunities.",
-    "availableLabel": "Available for work",
-    "pills": ["AI Architect","Data Engineer","Azure","Full Stack Developer"],
-    "specialistStat": { "value": "AI + Full Stack", "label": "Specialist" }
+    "taglineHighlight": "measured",
+    "freelanceNote": "Open to full-time AI engineering roles.",
+    "availableLabel": "Open to full-time roles",
+    "basedInPrefix": "Based in",
+    "availablePrefix": "Available",
+    "pills": ["AI Agents", "LLM Evals", "Data Engineering", "Microsoft Fabric"],
+    "specialistStat": { "value": "Agents + Data", "label": "Specialist" }
   },
   "interstitial": {
     "availabilityLabel": "Availability",
     "basedInLabel": "Based in"
   },
   "footer": {
-    "eyebrow": "Available for collaborations",
-    "ctaLines": ["Crafting modern", "digital products", "that feel"],
-    "ctaAccent": "alive."
+    "eyebrow": "Open to full-time roles",
+    "ctaLines": ["Building AI", "agents that", "show their"],
+    "ctaAccent": "work."
   },
   "projects": {
     "demo": "Live Demo",
