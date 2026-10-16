@@ -291,13 +291,11 @@
     }
   ],
   "resumeSkills": {
-    "Programming": "Python, SQL (MySQL)",
-    "Systems": "Linux (basic commands, file systems, process handling)",
-    "Data Handling": "Data preprocessing, ETL concepts, data validation",
-    "Tools": "Git, Jupyter Notebook, Streamlit, VS Code",
-    "Databases": "MySQL, MongoDB",
-    "Concepts": "Debugging, Root Cause Analysis, System Monitoring (basic), API handling",
-    "Other": "Excel, Documentation, Reporting"
+    "AI & LLMs": "AI agents, RAG, LLM evaluation, prompt engineering, MCP, LangChain, NLI-based verification",
+    "Data Engineering": "Microsoft Fabric, PySpark, Delta Lake, Azure Data Factory, Medallion architecture, Apache Arrow, OpenLineage",
+    "ML & Computer Vision": "TensorFlow, ONNX (INT8 quantisation), MediaPipe, OpenCV, LightGBM, XGBoost, SHAP",
+    "Backend & Web": "Python, FastAPI, SQL, PostgreSQL, React, Next.js",
+    "Tools & Cloud": "Git, GitHub Actions, Docker, Azure, Power BI"
   },
   "certifications": [
     {
