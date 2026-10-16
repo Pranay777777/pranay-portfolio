@@ -125,23 +125,110 @@
   "projects": [
     {
       "id": 1,
-      "title": "EasyFolio",
-      "subtitle": "Portfolio experience with cinematic motion and responsive storytelling.",
-      "type": "Frontend",
-      "desc": "A polished portfolio concept focused on immersive visuals, smooth section transitions, and a clean presentation layer for personal branding.",
-      "tech": ["Next.js", "GSAP", "CSS Modules", "React"],
-      "image": "/assets/project-easyfolio.png",
-      "link": "https://github.com/Pranay777777"
+      "slug": "metadata-driven-lakehouse",
+      "title": "Metadata-Driven Lakehouse",
+      "subtitle": "Onboard a new data source with one metadata row, not a new pipeline.",
+      "type": "Data Engineering",
+      "metric": "1.6M rows · 10.1 s on 1 vCPU",
+      "desc": "Config-driven ingestion from Bronze to a Gold star schema with data-quality checks, PII masking, OpenLineage lineage and an audit trail. Apache Arrow benchmarked at 16× Spark throughput on 1M rows; 499 tests, 96% coverage.",
+      "tech": [
+        "Python",
+        "Delta Lake",
+        "Apache Arrow",
+        "Medallion",
+        "OpenLineage",
+        "PostgreSQL"
+      ],
+      "image": "/assets/project-lakehouse.webp",
+      "links": {
+        "code": "https://github.com/Pranay777777/metadata-driven-lakehouse",
+        "log": "https://github.com/Pranay777777/metadata-driven-lakehouse/blob/main/docs/build-log.md"
+      }
     },
     {
       "id": 2,
-      "title": "Artgenio",
-      "subtitle": "AI-assisted creative tooling for generating and refining visual concepts.",
-      "type": "AI Product",
-      "desc": "A concept project for exploring AI-driven creative workflows, combining prompt-based generation, iteration, and presentation-focused UI patterns.",
-      "tech": ["Python", "AI", "Generative Workflows", "Product Design"],
-      "image": "/assets/project-artgenio.png",
-      "link": "https://github.com/Pranay777777"
+      "slug": "agentic-pipeline-copilot",
+      "title": "Agentic Pipeline Copilot",
+      "subtitle": "Plain-English spec in, a validated and tested PySpark notebook out, opened as a pull request.",
+      "type": "AI Agents",
+      "metric": "Agents propose, humans merge",
+      "desc": "An LLM agent that generates PySpark from a spec, executes it in a Docker sandbox, tests it and opens a pull request for human review. It never merges its own work. An eval suite gates CI.",
+      "tech": [
+        "Python",
+        "PySpark",
+        "LLM Agents",
+        "MCP",
+        "Docker",
+        "Evals"
+      ],
+      "image": "/assets/project-copilot.webp",
+      "links": {
+        "code": "https://github.com/Pranay777777/agentic-pipeline-copilot",
+        "log": "https://github.com/Pranay777777/agentic-pipeline-copilot/blob/main/docs/build-log.md"
+      }
+    },
+    {
+      "id": 3,
+      "slug": "evidence-grounded-resume-engine",
+      "title": "Evidence-Grounded Résumé Engine",
+      "subtitle": "A résumé generator where every claim must cite verified evidence.",
+      "type": "LLM · Evals",
+      "metric": "0 / 53 bullets fabricated",
+      "desc": "RAG plus an NLI verifier gate cut the fabrication rate of kept bullets from 23% to 0% on a hand-labelled golden set (95% upper bound 7%), and blocks all 34 payloads in its prompt-injection suite. Fabrication is measured, not promised.",
+      "tech": [
+        "Python",
+        "RAG",
+        "NLI",
+        "PostgreSQL",
+        "LLM Evals"
+      ],
+      "image": "/assets/project-resume-engine.webp",
+      "links": {
+        "demo": "https://huggingface.co/spaces/7Pranay77/evidence-grounded-resume-engine",
+        "code": "https://github.com/Pranay777777/evidence-grounded-resume-engine"
+      }
+    },
+    {
+      "id": 4,
+      "slug": "asl-realtime-inference",
+      "title": "Real-Time ASL Recognition",
+      "subtitle": "ASL alphabet recognition on CPU that says \"not confident\" instead of guessing.",
+      "type": "Computer Vision",
+      "metric": "2.69 MB INT8 · 1.33 ms",
+      "desc": "MediaPipe hand crop feeding an INT8-quantised MobileNetV2 in ONNX: 99.96% accuracy, 1.33 ms p50 on CPU, 97× faster than the FP32 Keras model, with a calibrated confidence threshold. Runs in the browser via onnxruntime-web.",
+      "tech": [
+        "Python",
+        "ONNX",
+        "MediaPipe",
+        "TensorFlow",
+        "Quantization"
+      ],
+      "image": "/assets/project-asl.webp",
+      "links": {
+        "demo": "https://huggingface.co/spaces/7Pranay77/asl-alphabet-recognizer",
+        "code": "https://github.com/Pranay777777/asl-realtime-inference"
+      }
+    },
+    {
+      "id": 5,
+      "slug": "neighborhood-skill-swap",
+      "title": "Neighborhood Skill Swap",
+      "subtitle": "A full-stack skill-swap board with the security most demo apps skip.",
+      "type": "Full-Stack · Security",
+      "metric": "Authorization tested on every owned object",
+      "desc": "React, FastAPI and Postgres with rotating refresh tokens, Argon2id password hashing, rate-limited auth endpoints and authorization tests on every owned resource. Playwright E2E runs in CI.",
+      "tech": [
+        "React",
+        "FastAPI",
+        "PostgreSQL",
+        "Docker",
+        "Playwright"
+      ],
+      "image": "/assets/project-skill-swap.webp",
+      "links": {
+        "demo": "https://skillswap-web-xhfs.onrender.com",
+        "code": "https://github.com/Pranay777777/Neighborhood-Skill-Swap-Platform"
+      }
     }
   ],
   "publications": [

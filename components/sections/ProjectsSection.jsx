@@ -4,9 +4,12 @@ import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { gsap, ScrollTrigger } from '@/lib/gsap'
 import profile from '@/data/profile.json'
+import content from '@/data/content.json'
 import styles from '@/styles/sections/ProjectsSection.module.css'
 
 const PROJECTS = profile.projects
+const LABELS   = content.projects
+const pad2     = (n) => String(n).padStart(2, '0')
 
 export default function ProjectsSection() {
   const sectionRef  = useRef(null)
@@ -70,7 +73,7 @@ export default function ProjectsSection() {
         const sub   = next.querySelector(`.${styles.subtitle}`)
         const desc  = next.querySelector(`.${styles.desc}`)
         const tags  = next.querySelectorAll(`.${styles.tag}`)
-        const btn   = next.querySelector(`.${styles.liveBtn}`)
+        const btn   = next.querySelector(`.${styles.actions}`)
 
         if (meta)  tl.fromTo(meta,  { x: -10, opacity: 0 }, { x: 0, opacity: 1, duration: 0.25, ease: 'power2.out' }, i + 0.45)
         if (title) tl.fromTo(title, { opacity: 0, y: 20 },  { opacity: 1, y: 0, duration: 0.45, ease: 'expo.out'   }, i + 0.48)
@@ -100,7 +103,7 @@ export default function ProjectsSection() {
           })
         }
 
-        if (counterRef.current) counterRef.current.textContent = `0${activeIdx + 1}`
+        if (counterRef.current) counterRef.current.textContent = pad2(activeIdx + 1)
       },
     })
 
@@ -117,7 +120,7 @@ export default function ProjectsSection() {
           <div className={styles.counter}>
             <span ref={counterRef} className={styles.cCur}>01</span>
             <span className={styles.cSep}> / </span>
-            <span className={styles.cTot}>0{PROJECTS.length}</span>
+            <span className={styles.cTot}>{pad2(PROJECTS.length)}</span>
           </div>
         </div>
 
@@ -148,7 +151,7 @@ export default function ProjectsSection() {
                 <div className={styles.slideVignette}      aria-hidden />
               </div>
 
-              <span className={styles.slideNum} aria-hidden>0{i + 1}</span>
+              <span className={styles.slideNum} aria-hidden>{pad2(i + 1)}</span>
 
               <div
                 ref={el => { contentRefs.current[i] = el }}
@@ -157,20 +160,21 @@ export default function ProjectsSection() {
                 <div className={styles.slideLeft}>
                   <div className={styles.meta}>
                     <span className={styles.typeTag}>{proj.type}</span>
+                    {proj.metric && (
+                      <span className={`${styles.typeTag} ${styles.metricTag}`}>{proj.metric}</span>
+                    )}
                   </div>
                   <h2 className={styles.title}>{proj.title}</h2>
                   <p  className={styles.subtitle}>{proj.subtitle}</p>
-                  <a
-                    href={proj.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className={styles.liveBtn}
-                  >
-                    <span>Live Demo</span>
-                    <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
-                      <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                    </svg>
-                  </a>
+                  <div className={styles.actions}>
+                    {proj.links.demo && (
+                      <ProjectLink href={proj.links.demo} className={styles.liveBtn}>{LABELS.demo}</ProjectLink>
+                    )}
+                    <ProjectLink href={proj.links.code} className={styles.secondaryBtn}>{LABELS.code}</ProjectLink>
+                    {proj.links.log && (
+                      <ProjectLink href={proj.links.log} className={styles.secondaryBtn}>{LABELS.log}</ProjectLink>
+                    )}
+                  </div>
                 </div>
 
                 <div className={styles.slideRight}>
@@ -196,5 +200,16 @@ export default function ProjectsSection() {
 
       </section>
     </div>
+  )
+}
+
+function ProjectLink({ href, className, children }) {
+  return (
+    <a href={href} target="_blank" rel="noopener noreferrer" className={className}>
+      <span>{children}</span>
+      <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden>
+        <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+      </svg>
+    </a>
   )
 }

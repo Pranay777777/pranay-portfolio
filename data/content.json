@@ -17,5 +17,10 @@
     "eyebrow": "Available for collaborations",
     "ctaLines": ["Crafting modern", "digital products", "that feel"],
     "ctaAccent": "alive."
+  },
+  "projects": {
+    "demo": "Live Demo",
+    "code": "Code",
+    "log": "Build Log"
   }
 }
