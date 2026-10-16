@@ -672,6 +672,38 @@
   gap: 1.2rem;
 }
 
+/* "Back to top" — fade-cut to the intro */
+.backToTop {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.45rem;
+  min-width: 44px;
+  min-height: 44px;
+  padding: 0 1rem;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.7);
+  font-family: inherit;
+  font-size: var(--text-small);
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.2s, border-color 0.2s;
+}
+
+.backToTop:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+.backToTop:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
+}
+
 .builtWith {
   font-size: var(--text-small);
   font-weight: 500;
@@ -1151,6 +1183,10 @@
   .builtWith {
     font-size: 0.52rem;
   }
+
+  /* Icon-only on phones (label kept for screen readers via aria-label) */
+  .backToTop     { padding: 0; }
+  .backToTopText { display: none; }
 
   .sunIcon {
     font-size: 0.9rem;

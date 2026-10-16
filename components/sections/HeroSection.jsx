@@ -47,10 +47,7 @@ export default function HeroSection() {
   const socialRef      = useRef(null)
 
   function handleViewProjects() {
-    const scroller = document.querySelector('main')
-    if (scroller) {
-      gsap.to(scroller, { scrollTop: 3 * window.innerHeight, duration: 1.0, ease: 'power3.inOut' })
-    }
+    window.dispatchEvent(new CustomEvent('goto-section', { detail: 3 }))   // first project slide, via goTo
   }
 
   useEffect(() => {

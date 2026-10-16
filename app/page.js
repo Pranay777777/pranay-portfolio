@@ -30,7 +30,7 @@ export default function Home() {
     if (!el) return
 
     // Fade to black → instant scrollTop jump → fade in
-    // Used whenever we loop footer → first section
+    // Used by "Back to top" (footer → first section) instead of scrolling back through everything
     function fadeLoop(targetScrollTop, targetIdx) {
       busyRef.current = true
       tweenRef.current?.kill()
@@ -54,26 +54,17 @@ export default function Home() {
       })
     }
 
-    function goTo(idx) {
-      // Wrap-around
-      if (idx >= TOTAL) idx = 0
-      if (idx < 0)      idx = TOTAL - 1
+    // Destination of the move in flight (idxRef tracks the live position while scrolling)
+    let moveTarget = 0
 
+    // The only scroll mover. Stops at the first/last section (no wrap-around);
+    // ignored while a move is in progress (busyRef), so nothing can double-jump.
+    function goTo(idx) {
+      if (idx < 0 || idx >= TOTAL) return
       if (idx === idxRef.current || busyRef.current) return
 
-      // Footer → top: fade-cut instead of scrolling back through all sections
-      if (idxRef.current === TOTAL - 1 && idx === 0) {
-        fadeLoop(0, 0)
-        return
-      }
-
-      // Top → footer: fade-cut instead of scrolling forward through all sections
-      if (idxRef.current === 0 && idx === TOTAL - 1) {
-        fadeLoop((TOTAL - 1) * window.innerHeight, TOTAL - 1)
-        return
-      }
-
       idxRef.current = idx
+      moveTarget = idx
       busyRef.current = true
       tweenRef.current?.kill()
       tweenRef.current = gsap.to(el, {
@@ -84,12 +75,59 @@ export default function Home() {
       })
     }
 
-    function onWheel(e) {
-      e.preventDefault()
-      if (busyRef.current) return
-      goTo(idxRef.current + (e.deltaY > 0 ? 1 : -1))
+    // Same as goTo, but with the black fade-cut (for long jumps such as "Back to top")
+    function fadeTo(idx) {
+      if (idx < 0 || idx >= TOTAL) return
+      if (idx === idxRef.current || busyRef.current) return
+      fadeLoop(idx * window.innerHeight, idx)
     }
 
+    // ── Wheel / trackpad: one gesture = one section ─────────────────────
+    // A mouse notch is one big event; a trackpad flick is a stream that rises,
+    // then decays (momentum) for up to ~1–2 s. Accumulate until the threshold,
+    // move once, then ignore the rest of that gesture.
+    const WHEEL_THRESHOLD = 50    // px of accumulated deltaY before moving
+    const GESTURE_GAP_MS  = 200   // this long without wheel events ends a gesture
+    const LINE_PX         = 40    // deltaMode 1 (lines) → px; Firefox notch = 3 lines = 120 px
+    let wheelAcc     = 0
+    let lastWheelAt  = -Infinity
+    let lastWheelAbs = 0
+    let gestureUsed  = false      // this gesture already moved a section
+    let sawDecay     = false      // deltas have started shrinking since that move
+
+    function onWheel(e) {
+      e.preventDefault()
+      const now = performance.now()
+      const gap = now - lastWheelAt
+      lastWheelAt = now
+
+      const unit = e.deltaMode === 1 ? LINE_PX : e.deltaMode === 2 ? window.innerHeight : 1
+      const dy = e.deltaY * unit
+      const dx = e.deltaX * unit
+      if (Math.abs(dx) > Math.abs(dy)) return              // sideways swipe: do nothing
+      const abs = Math.abs(dy)
+
+      // A new gesture starts after a quiet gap, when the delta clearly rises again
+      // after decaying (a fresh flick during momentum), or — once the move has
+      // finished — with a full-size, non-decaying event (a mouse wheel kept rolling).
+      if (gestureUsed && abs < lastWheelAbs) sawDecay = true
+      const quietGap  = gap > GESTURE_GAP_MS
+      const reFlick   = gestureUsed && sawDecay && abs >= Math.max(lastWheelAbs * 1.6, lastWheelAbs + 8)
+      const kept      = gestureUsed && !busyRef.current && abs >= WHEEL_THRESHOLD && abs >= lastWheelAbs
+      lastWheelAbs = abs
+      if (quietGap || reFlick || kept) { wheelAcc = 0; gestureUsed = false; sawDecay = false }
+
+      if (gestureUsed || busyRef.current) return
+      wheelAcc += dy
+      if (Math.abs(wheelAcc) < WHEEL_THRESHOLD) return
+
+      const dir = Math.sign(wheelAcc)
+      wheelAcc = 0
+      gestureUsed = true
+      goTo(idxRef.current + dir)
+    }
+
+    // Desktop touchscreens: one swipe = one section (stops at the ends)
     let touchY = 0
     function onTouchStart(e) { touchY = e.touches[0].clientY }
     function onTouchEnd(e) {
@@ -99,21 +137,39 @@ export default function Home() {
     }
 
     function onScroll() {
+      if (resizeIdx !== null) return   // mid-resize: innerHeight changed, keep the section we were on
       idxRef.current = Math.round(el.scrollTop / window.innerHeight)
     }
 
-    // Footer video ends → same fade-cut loop back to top
-    function onFooterLoop() {
-      if (busyRef.current) return
-      fadeLoop(0, 0)
-    }
-
-    // Components request a jump via `goto-section` (detail = index) so goTo stays the only scroll mover
+    // Components request a jump via `goto-section` so goTo stays the only scroll mover.
+    // detail: a section index, or { index, fade: true } for the fade-cut
     function onGotoSection(e) {
-      goTo(e.detail)
+      const d = e.detail
+      if (typeof d === 'number') goTo(d)
+      else if (d?.fade) fadeTo(d.index)
+      else goTo(d?.index)
     }
 
-    // Keyboard: ↑ / ↓ (and Page Up / Down) move one section, stopping at the first/last; ← / → do nothing
+    // ── Resize / rotation: re-snap to the current section (desktop; mobile scrolls natively) ──
+    let resizeIdx = null
+    let resizeTimer
+    function onResize() {
+      if (window.matchMedia('(max-width: 767px)').matches) return
+      if (resizeIdx === null) resizeIdx = tweenRef.current?.isActive() ? moveTarget : idxRef.current
+      clearTimeout(resizeTimer)
+      resizeTimer = setTimeout(() => {
+        if (tweenRef.current?.isActive()) {          // a move was in flight: land on its target
+          tweenRef.current.kill()
+          busyRef.current = false
+        }
+        idxRef.current = resizeIdx
+        el.scrollTop = resizeIdx * window.innerHeight
+        resizeIdx = null
+      }, 150)
+    }
+
+    // Keyboard: ↑ / ↓ (and Page Up / Down) move one section, Home / End jump to the
+    // first / last; all stop at the ends. ← / → do nothing. Inactive until "Step Inside".
     const NEXT_KEYS = ['ArrowDown', 'PageDown']
     const PREV_KEYS = ['ArrowUp', 'PageUp']
     function onKeyDown(e) {
@@ -121,41 +177,31 @@ export default function Home() {
       const t = e.target
       if (t instanceof HTMLElement && (t.isContentEditable || /^(INPUT|TEXTAREA|SELECT)$/.test(t.tagName))) return
       if (e.key === 'ArrowLeft' || e.key === 'ArrowRight') { e.preventDefault(); return }
-      const dir = NEXT_KEYS.includes(e.key) ? 1 : PREV_KEYS.includes(e.key) ? -1 : 0
-      if (!dir) return
-      e.preventDefault()                              // no native few-pixel scroll
+      let next
+      if (e.key === 'Home')     next = 0
+      else if (e.key === 'End') next = TOTAL - 1
+      else {
+        const dir = NEXT_KEYS.includes(e.key) ? 1 : PREV_KEYS.includes(e.key) ? -1 : 0
+        if (!dir) return
+        next = idxRef.current + dir
+      }
+      e.preventDefault()                              // no native scroll
       if (loaderOpenRef.current || busyRef.current) return
-      const next = idxRef.current + dir
-      if (next < 0 || next >= TOTAL) return           // keys stop at the ends (no wrap-around)
-      goTo(next)
+      goTo(next)                                      // goTo ignores indexes past the ends
     }
 
     const isMobile = window.matchMedia('(max-width: 767px)').matches
 
     el.addEventListener('wheel',  onWheel,  { passive: false })
     el.addEventListener('scroll', onScroll, { passive: true  })
-
-    let mTouchY = 0
-    function onMobileTouchStart(e) { mTouchY = e.touches[0].clientY }
-    function onMobileTouchEnd(e) {
-      const dy = mTouchY - e.changedTouches[0].clientY
-      if (Math.abs(dy) < 40) return
-      const atBottom = el.scrollTop + el.clientHeight >= el.scrollHeight - 8
-      const atTop    = el.scrollTop < 8
-      if (dy > 0 && atBottom) fadeLoop(0, 0)
-      if (dy < 0 && atTop)    fadeLoop(el.scrollHeight - el.clientHeight, TOTAL - 1)
-    }
-
+    // Mobile keeps native scrolling (no touch handlers, no looping at the ends)
     if (!isMobile) {
       el.addEventListener('touchstart', onTouchStart, { passive: true })
       el.addEventListener('touchend',   onTouchEnd,   { passive: true })
-    } else {
-      el.addEventListener('touchstart', onMobileTouchStart, { passive: true })
-      el.addEventListener('touchend',   onMobileTouchEnd,   { passive: true })
     }
-    window.addEventListener('footer-loop-back', onFooterLoop)
     window.addEventListener('goto-section', onGotoSection)
     window.addEventListener('keydown', onKeyDown)
+    window.addEventListener('resize', onResize)
 
     return () => {
       el.removeEventListener('wheel',  onWheel)
@@ -163,13 +209,11 @@ export default function Home() {
       if (!isMobile) {
         el.removeEventListener('touchstart', onTouchStart)
         el.removeEventListener('touchend',   onTouchEnd)
-      } else {
-        el.removeEventListener('touchstart', onMobileTouchStart)
-        el.removeEventListener('touchend',   onMobileTouchEnd)
       }
-      window.removeEventListener('footer-loop-back', onFooterLoop)
       window.removeEventListener('goto-section', onGotoSection)
       window.removeEventListener('keydown', onKeyDown)
+      window.removeEventListener('resize', onResize)
+      clearTimeout(resizeTimer)
       tweenRef.current?.kill()
     }
   }, [])
@@ -180,7 +224,7 @@ export default function Home() {
         <ScreenLoader onDismiss={() => { loaderOpenRef.current = false; setShowLoader(false) }} />
       )}
 
-      {/* Full-screen fade overlay for seamless footer → top loop */}
+      {/* Full-screen fade overlay for the "Back to top" fade-cut */}
       <div
         ref={loopOverlayRef}
         style={{

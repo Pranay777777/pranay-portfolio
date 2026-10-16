@@ -24,6 +24,11 @@ const NAV_ITEMS = [
   { label: 'Contact',      idx: 6 + N },
 ]
 
+// All section jumps go through page.js goTo (busy lock, no double-jumps)
+function goToSection(idx) {
+  window.dispatchEvent(new CustomEvent('goto-section', { detail: idx }))
+}
+
 function getIST() {
   return new Date().toLocaleTimeString('en-IN', {
     timeZone: 'Asia/Kolkata',
@@ -55,7 +60,6 @@ export default function Navbar() {
   // Auto-hide on scroll-down, reveal on scroll-up or scroll-stop
   useEffect(() => {
     const scroller = document.querySelector('main') ?? window
-    const vh = window.innerHeight
 
     function showNavbar() {
       if (!hidden.current) return
@@ -66,6 +70,7 @@ export default function Navbar() {
     const onScroll = () => {
       const currentY = scroller.scrollTop ?? window.scrollY
       const delta    = currentY - lastY.current
+      const vh       = window.innerHeight   // read live so it stays right after a resize
 
       const sectionIdx = Math.round(currentY / vh)
       setOnIntro(currentY < vh * 0.8)
@@ -104,14 +109,7 @@ export default function Navbar() {
               <NavigationMenuItem key={label}>
                 <NavigationMenuLink
                   className={styles.navLink}
-                  onClick={() => {
-                    const scroller = document.querySelector('main')
-                    if (scroller) gsap.to(scroller, {
-                      scrollTop: idx * window.innerHeight,
-                      duration: 1.0,
-                      ease: 'power3.inOut',
-                    })
-                  }}
+                  onClick={() => goToSection(idx)}
                   style={{ cursor: 'pointer' }}
                 >
                   {label}
@@ -144,12 +142,7 @@ export default function Navbar() {
               key={label}
               className={styles.mobileNavLink}
               onClick={() => {
-                const scroller = document.querySelector('main')
-                if (scroller) gsap.to(scroller, {
-                  scrollTop: idx * window.innerHeight,
-                  duration: 1.0,
-                  ease: 'power3.inOut',
-                })
+                goToSection(idx)
                 setMenuOpen(false)
               }}
             >

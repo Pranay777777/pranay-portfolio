@@ -18,7 +18,9 @@
   "footer": {
     "eyebrow": "Open to full-time roles",
     "ctaLines": ["Building AI", "agents that", "show their"],
-    "ctaAccent": "work."
+    "ctaAccent": "work.",
+    "backToTop": "Back to top",
+    "backToTopLabel": "Back to the top of the page"
   },
   "intro": {
     "unmuteHint": "Tap for sound",

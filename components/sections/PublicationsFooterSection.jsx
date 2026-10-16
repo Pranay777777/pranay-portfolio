@@ -49,9 +49,9 @@ function easeInOut(t) {
   return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t
 }
 
-function handleViewProjects() {
-  const scroller = document.querySelector('main')
-  if (scroller) gsap.to(scroller, { scrollTop: 3 * window.innerHeight, duration: 1.0, ease: 'power3.inOut' })
+// Fade-cut back to the intro (via page.js goTo controller)
+function backToTop() {
+  window.dispatchEvent(new CustomEvent('goto-section', { detail: { index: 0, fade: true } }))
 }
 
 export default function PublicationsFooterSection() {
@@ -452,6 +452,16 @@ export default function PublicationsFooterSection() {
               </div>
             </div>
             <div className={styles.bottomRight}>
+              <button
+                type="button"
+                className={styles.backToTop}
+                onClick={backToTop}
+                aria-label={content.footer.backToTopLabel}
+              >
+                <span className={styles.backToTopText}>{content.footer.backToTop}</span>
+                <span aria-hidden="true">↑</span>
+              </button>
+              <span className={styles.barDivider} />
               <span className={styles.builtWith}>
                 DESIGNED &amp; DEVELOPED
                 <br />
