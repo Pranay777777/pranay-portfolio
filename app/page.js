@@ -113,7 +113,7 @@ export default function Home() {
       goTo(e.detail)
     }
 
-    // Keyboard: ↑ / ↓ (and Page Up / Down) move one section; ← / → do nothing
+    // Keyboard: ↑ / ↓ (and Page Up / Down) move one section, stopping at the first/last; ← / → do nothing
     const NEXT_KEYS = ['ArrowDown', 'PageDown']
     const PREV_KEYS = ['ArrowUp', 'PageUp']
     function onKeyDown(e) {
@@ -125,7 +125,9 @@ export default function Home() {
       if (!dir) return
       e.preventDefault()                              // no native few-pixel scroll
       if (loaderOpenRef.current || busyRef.current) return
-      goTo(idxRef.current + dir)
+      const next = idxRef.current + dir
+      if (next < 0 || next >= TOTAL) return           // keys stop at the ends (no wrap-around)
+      goTo(next)
     }
 
     const isMobile = window.matchMedia('(max-width: 767px)').matches
