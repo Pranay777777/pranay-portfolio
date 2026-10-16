@@ -1,12 +1,14 @@
 'use client'
 
-import { useEffect, useRef } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import Image from 'next/image'
 import { gsap } from '@/lib/gsap'
 import profile from '@/data/profile.json'
+import content from '@/data/content.json'
 import styles from '@/styles/sections/WorkExperienceSection.module.css'
 
-const EXPS = profile.experience
+const EXPS   = profile.experience
+const LABELS = content.experience
 
 export default function WorkExperienceSection() {
   const sectionRef        = useRef(null)
@@ -17,6 +19,12 @@ export default function WorkExperienceSection() {
   const bulletListRefs    = useRef([])
   const collapsedHeights  = useRef([])
   const hoverTlsRef       = useRef([])
+  // Mobile only: which cards have their bullets + tech expanded (keyed by exp.id)
+  const [openIds, setOpenIds] = useState({})
+
+  function toggleDetails(id) {
+    setOpenIds(prev => ({ ...prev, [id]: !prev[id] }))
+  }
 
   // Capture each bullet list's natural collapsed height after first paint
   useEffect(() => {
@@ -149,18 +157,33 @@ export default function WorkExperienceSection() {
                   </div>
                   <h2 className={styles.company}>{exp.company}</h2>
                   <p  className={styles.role}>{exp.role}</p>
-                  <ul
-                    ref={el => { bulletListRefs.current[i] = el }}
-                    className={styles.bullets}
+                  {exp.desc && <p className={styles.desc}>{exp.desc}</p>}
+                  <button
+                    type="button"
+                    className={styles.detailsBtn}
+                    aria-expanded={!!openIds[exp.id]}
+                    aria-controls={`exp-details-${exp.id}`}
+                    onClick={() => toggleDetails(exp.id)}
                   >
-                    {exp.bullets.map((b, bi) => (
-                      <li key={bi} className={styles.bullet}>{b}</li>
-                    ))}
-                  </ul>
-                  <div className={styles.stack}>
-                    {exp.tech.map(t => (
-                      <span key={t} className={styles.tag}>{t}</span>
-                    ))}
+                    {openIds[exp.id] ? LABELS.hideDetails : LABELS.showDetails}
+                  </button>
+                  <div
+                    id={`exp-details-${exp.id}`}
+                    className={`${styles.details} ${openIds[exp.id] ? styles.detailsOpen : ''}`}
+                  >
+                    <ul
+                      ref={el => { bulletListRefs.current[i] = el }}
+                      className={styles.bullets}
+                    >
+                      {exp.bullets.map((b, bi) => (
+                        <li key={bi} className={styles.bullet}>{b}</li>
+                      ))}
+                    </ul>
+                    <div className={styles.stack}>
+                      {exp.tech.map(t => (
+                        <span key={t} className={styles.tag}>{t}</span>
+                      ))}
+                    </div>
                   </div>
                 </div>
 

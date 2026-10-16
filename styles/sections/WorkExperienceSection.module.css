@@ -220,6 +220,18 @@
   text-transform: uppercase;
 }
 
+/* ── Mobile-only summary + details toggle ───────── */
+/* Desktop: hidden; the details wrapper is layout-transparent so the
+   bullets + stack stay direct flex children of .card (hover expand unchanged). */
+.desc,
+.detailsBtn {
+  display: none;
+}
+
+.details {
+  display: contents;
+}
+
 /* ── Bullets ────────────────────────────────────── */
 .bullets {
   list-style: none;
@@ -283,7 +295,7 @@
 
   .entries {
     flex-direction: column;
-    gap: 1.5rem;
+    gap: 1.2rem;
   }
 
   .entry {
@@ -321,6 +333,51 @@
 
   .stack {
     display: none;
+  }
+
+  /* Collapsed by default: role, company, period + desc; button expands */
+  .desc {
+    display: block;
+    font-size: 0.88rem;
+    line-height: 1.5;
+    color: rgba(255, 255, 255, 0.44);
+    margin: 0;
+  }
+
+  .detailsBtn {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    min-height: 44px;
+    padding: 0 1rem;
+    border-radius: 6px;
+    background: transparent;
+    color: var(--accent);
+    border: 1px solid color-mix(in srgb, var(--accent) 45%, transparent);
+    font-size: var(--text-small);
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    cursor: pointer;
+  }
+
+  .detailsBtn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 3px;
+  }
+
+  .details {
+    display: none;
+  }
+
+  .detailsOpen {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+  }
+
+  .detailsOpen .stack {
+    display: flex;
   }
 }
 

@@ -14,7 +14,7 @@
   },
   "location": {
     "based": "Mumbai, India",
-    "availability": "Anywhere — open to relocation"
+    "availability": "Anywhere"
   },
   "available": true,
   "keywords": [
@@ -103,7 +103,7 @@
         "Built a multi-agent accelerator (MCP + Microsoft Fabric) that turns business requirements and source data into KPI definitions, PySpark notebooks, and semantic models and reports, published to Fabric through its REST APIs.",
         "Researched Power BI semantic search across multi-tenant workspaces and prototyped a semantic-model advisor (pbixray + FastAPI) that surfaces tables, DAX measures and relationships in an interactive dashboard.",
         "Built an internal résumé-standardisation agent that converts résumés into the company's standard format, and evaluated open-source LLM alternatives to reduce cost and vendor lock-in.",
-        "Worked on Medallion-architecture pipelines with Azure Data Factory, PySpark and Delta Lake; earned Microsoft AZ-900, DP-900 and DP-700."
+        "Worked on Medallion-architecture pipelines with Azure Data Factory, PySpark and Delta Lake."
       ],
       "desc": "Data & AI team: built agentic accelerators and AI prototypes on Microsoft Fabric and Power BI, alongside core data engineering work.",
       "tech": [

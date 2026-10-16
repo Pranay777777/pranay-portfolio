@@ -20,6 +20,10 @@
     "ctaLines": ["Building AI", "agents that", "show their"],
     "ctaAccent": "work."
   },
+  "experience": {
+    "showDetails": "Show details",
+    "hideDetails": "Hide details"
+  },
   "projects": {
     "demo": "Live Demo",
     "code": "Code",
