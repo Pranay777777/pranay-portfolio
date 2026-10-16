@@ -29,7 +29,9 @@ export default function CinematicLayer() {
     const canvas = canvasRef.current
     if (!canvas) return
 
-    const renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false })
+    // No WebGL (disabled / unsupported): skip the effect instead of crashing the page
+    let renderer
+    try { renderer = new THREE.WebGLRenderer({ canvas, alpha: true, antialias: false }) } catch { return }
     renderer.setSize(window.innerWidth, window.innerHeight)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
 

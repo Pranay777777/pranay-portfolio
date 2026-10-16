@@ -40,7 +40,9 @@ export default function HeroBackground() {
     let H = mount.clientHeight
 
     // ── Renderer ─────────────────────────────────────────
-    const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true })
+    // No WebGL (disabled / unsupported): skip the effect instead of crashing the page
+    let renderer
+    try { renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true }) } catch { return }
     renderer.setSize(W, H)
     renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2))
     renderer.domElement.style.cssText =
