@@ -9,9 +9,19 @@ import styles from '@/styles/sections/VideoIntro.module.css'
 
 const CinematicLayer = dynamic(() => import('@/components/three/CinematicLayer'), { ssr: false })
 
+const LABELS = content.intro
+
+// If the video can't load (error, or no frames this long after the loader), move on to the hero
+const LOAD_TIMEOUT_MS = 5000
+
 function scrollNext() {
+  window.dispatchEvent(new CustomEvent('goto-section', { detail: 1 }))
+}
+
+// Only skip if the visitor is still on the intro
+function skipIfOnIntro() {
   const main = document.querySelector('main')
-  if (main) main.scrollTo({ top: window.innerHeight, behavior: 'smooth' })
+  if (main && main.scrollTop < window.innerHeight * 0.4) scrollNext()
 }
 
 export default function VideoIntro() {
@@ -21,13 +31,25 @@ export default function VideoIntro() {
   const nameRef       = useRef(null)
   const roleRef       = useRef(null)
   const scrollRef     = useRef(null)
-  const hintRef       = useRef(null)
+  const loaderDoneRef = useRef(false)
 
   // muted state drives icon only - DOM muted property is controlled exclusively via ref
   const [muted,    setMuted]    = useState(true)
   const [playing,  setPlaying]  = useState(true)
-  const [showHint, setShowHint] = useState(true)
   const [isMobile, setIsMobile] = useState(false)
+
+  // play(); if sound is refused (autoplay policy), retry muted and keep playing.
+  // If even muted playback is refused, fall back to the paused overlay (Play button).
+  function playWithFallback() {
+    const v = videoRef.current
+    if (!v) return
+    v.play().catch(err => {
+      if (err?.name !== 'NotAllowedError') return   // load failures are handled by onError / the timeout
+      v.muted = true
+      setMuted(true)
+      return v.play().catch(() => setPlaying(false))
+    })
+  }
 
   useEffect(() => {
     setIsMobile(window.matchMedia('(max-width: 767px)').matches)
@@ -43,7 +65,7 @@ export default function VideoIntro() {
     return () => tl.kill()
   }, [])
 
-  // Video fade-in - no auto-unmute; user must click the button
+  // Video fade-in; starts muted, unmuted by the "Step Inside" click below
   useEffect(() => {
     const v = videoRef.current
     if (!v) return
@@ -60,21 +82,29 @@ export default function VideoIntro() {
       if (!v) return
       v.muted = false
       setMuted(false)
-      dismissHint()
     }
     window.addEventListener('loader-dismissed', onLoaderDismissed)
     return () => window.removeEventListener('loader-dismissed', onLoaderDismissed)
   }, [])
 
-  // Play video after shatter animation finishes
+  // Play video after shatter animation finishes; skip to the hero if it never loads
   useEffect(() => {
+    let timeoutId
     function onAnimationDone() {
+      loaderDoneRef.current = true
       const v = videoRef.current
       if (!v) return
-      v.play().catch(() => {})
+      if (v.error) { skipIfOnIntro(); return }
+      playWithFallback()
+      timeoutId = setTimeout(() => {
+        if (v.readyState < 2) skipIfOnIntro()   // no frame decoded yet
+      }, LOAD_TIMEOUT_MS)
     }
     window.addEventListener('loader-animation-done', onAnimationDone)
-    return () => window.removeEventListener('loader-animation-done', onAnimationDone)
+    return () => {
+      window.removeEventListener('loader-animation-done', onAnimationDone)
+      clearTimeout(timeoutId)
+    }
   }, [])
 
   // Ambient background: draw main video to tiny offscreen canvas at ~5 fps.
@@ -113,30 +143,14 @@ export default function VideoIntro() {
     }
   }, [])
 
-  // Auto-hide hint after 6 s
-  useEffect(() => {
-    if (!showHint) return
-    const id = setTimeout(() => dismissHint(), 6000)
-    return () => clearTimeout(id)
-  }, [showHint])
-
-  function dismissHint() {
-    if (!hintRef.current) return
-    gsap.to(hintRef.current, {
-      opacity: 0, y: -8, duration: 0.35,
-      onComplete: () => setShowHint(false),
-    })
-  }
-
   function togglePlay() {
     const v = videoRef.current
     if (!v) return
     if (playing) { v.pause(); setPlaying(false) }
-    else         { v.play();  setPlaying(true)  }
+    else         { playWithFallback(); setPlaying(true) }
   }
 
   function toggleMute() {
-    if (showHint) dismissHint()
     const v = videoRef.current
     if (!v) return
     // Set DOM property synchronously inside click gesture - Safari requires this.
@@ -147,8 +161,12 @@ export default function VideoIntro() {
   }
 
   function handleEnded() {
-    const main = document.querySelector('main')
-    if (main && main.scrollTop < window.innerHeight * 0.4) scrollNext()
+    skipIfOnIntro()
+  }
+
+  // Source failed to load: move on if the loader is already gone (otherwise the loader-done handler checks v.error)
+  function handleError() {
+    if (loaderDoneRef.current) skipIfOnIntro()
   }
 
   return (
@@ -170,6 +188,7 @@ export default function VideoIntro() {
         onPlay={() => setPlaying(true)}
         onPause={() => setPlaying(false)}
         onEnded={handleEnded}
+        onError={handleError}
         className={styles.mainVideo}
       />
 
@@ -198,12 +217,12 @@ export default function VideoIntro() {
         </button>
       )}
 
-      {/* 7 - Sound hint badge (auto-fades after 6 s) */}
-      {showHint && (
-        <div ref={hintRef} className={styles.soundHint} onClick={toggleMute} style={{ pointerEvents: 'all', cursor: 'pointer' }}>
-          <span className={styles.soundPulse} />
-          <span>Tap for sound</span>
-        </div>
+      {/* 7 - Unmute button: shown whenever the video is muted (e.g. autoplay with sound was blocked) */}
+      {muted && (
+        <button type="button" className={styles.unmuteBtn} onClick={toggleMute} aria-label={LABELS.unmuteLabel}>
+          <span className={styles.soundPulse} aria-hidden="true" />
+          <span>{LABELS.unmuteHint}</span>
+        </button>
       )}
 
       {/* 8 - Controls (bottom-right) */}
@@ -222,7 +241,7 @@ export default function VideoIntro() {
           }
         </button>
 
-        <button className={styles.ctrlBtn} onClick={toggleMute} aria-label={muted ? 'Unmute' : 'Mute'}>
+        <button className={styles.ctrlBtn} onClick={toggleMute} aria-label={muted ? LABELS.unmuteLabel : LABELS.muteLabel}>
           {muted
             ? /* Muted icon */
               <svg width="16" height="16" viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round">

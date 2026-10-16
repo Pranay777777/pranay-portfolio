@@ -103,22 +103,40 @@
   stroke: rgba(255, 255, 255, 0.85);
 }
 
-/* ── Sound hint badge ───────────────────────── */
-.soundHint {
+/* ── Unmute button (visible while muted) ────── */
+.unmuteBtn {
   position: absolute;
-  bottom: 5.5rem;
+  bottom: 5.25rem;
   right: 2rem;
   z-index: 6;
   display: flex;
   align-items: center;
   gap: 0.55rem;
+  min-height: 44px;
+  padding: 0 0.9rem;
+  border: none;
+  border-radius: 999px;
+  background: transparent;
   color: rgba(255, 255, 255, 0.75);
+  font-family: inherit;
   font-size: 0.65rem;
   font-weight: 600;
   letter-spacing: 0.18em;
   text-transform: uppercase;
-  pointer-events: none;
+  cursor: pointer;
   user-select: none;
+  transition: color 0.2s, background 0.2s;
+}
+
+.unmuteBtn:hover {
+  color: #fff;
+  background: rgba(255, 255, 255, 0.08);
+}
+
+.unmuteBtn:focus-visible,
+.ctrlBtn:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 3px;
 }
 
 .soundPulse {
@@ -159,8 +177,8 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 2.4rem;
-  height: 2.4rem;
+  width: 2.75rem;
+  height: 2.75rem;
   border-radius: 50%;
   border: 1px solid rgba(255, 255, 255, 0.2);
   background: rgba(255, 255, 255, 0.08);
@@ -227,6 +245,6 @@
   .name        { font-size: clamp(2.8rem, 11vw, 5rem); }
   .controls    { bottom: 1.5rem; right: 1rem; }
   .scrollCue   { bottom: 1.5rem; }
-  .soundHint   { bottom: 4.5rem; right: 1rem; }
+  .unmuteBtn   { bottom: 4.5rem; right: 0.5rem; }
   .bgVideo     { display: none; }
 }

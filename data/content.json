@@ -20,6 +20,11 @@
     "ctaLines": ["Building AI", "agents that", "show their"],
     "ctaAccent": "work."
   },
+  "intro": {
+    "unmuteHint": "Tap for sound",
+    "unmuteLabel": "Unmute intro video",
+    "muteLabel": "Mute intro video"
+  },
   "experience": {
     "showDetails": "Show details",
     "hideDetails": "Hide details"

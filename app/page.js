@@ -107,6 +107,11 @@ export default function Home() {
       fadeLoop(0, 0)
     }
 
+    // Components request a jump via `goto-section` (detail = index) so goTo stays the only scroll mover
+    function onGotoSection(e) {
+      goTo(e.detail)
+    }
+
     const isMobile = window.matchMedia('(max-width: 767px)').matches
 
     el.addEventListener('wheel',  onWheel,  { passive: false })
@@ -131,6 +136,7 @@ export default function Home() {
       el.addEventListener('touchend',   onMobileTouchEnd,   { passive: true })
     }
     window.addEventListener('footer-loop-back', onFooterLoop)
+    window.addEventListener('goto-section', onGotoSection)
 
     return () => {
       el.removeEventListener('wheel',  onWheel)
@@ -143,6 +149,7 @@ export default function Home() {
         el.removeEventListener('touchend',   onMobileTouchEnd)
       }
       window.removeEventListener('footer-loop-back', onFooterLoop)
+      window.removeEventListener('goto-section', onGotoSection)
       tweenRef.current?.kill()
     }
   }, [])
