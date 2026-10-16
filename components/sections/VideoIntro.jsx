@@ -177,10 +177,7 @@ export default function VideoIntro() {
     if (!stage) return
     if (prefersReducedMotion()) return   // hero simply crossfades over it (see HeroSection)
 
-    // Blur is the expensive part: desktop only, and skipped on low-end hardware
-    const canBlur = window.matchMedia('(min-width: 768px)').matches
-      && (navigator.hardwareConcurrency ?? 8) > 4
-      && (navigator.deviceMemory ?? 8) > 4
+    // No blur: even 3 px caused long frames over the video + WebGL layers
     const set = gsap.quickSetter(stage, 'css')
 
     return subscribeIntroProgress(p => {
@@ -188,11 +185,10 @@ export default function VideoIntro() {
         set({ scale: 1, borderRadius: 0, filter: 'none' })
         return
       }
-      const blur = canBlur ? ` blur(${(3 * p).toFixed(2)}px)` : ''   // capped at 3 px: 6 px caused long frames
       set({
         scale:        1 - 0.08 * p,
         borderRadius: 24 * p,
-        filter:       `brightness(${(1 - 0.6 * p).toFixed(3)})${blur}`,
+        filter:       `brightness(${(1 - 0.6 * p).toFixed(3)})`,
       })
     })
   }, [])

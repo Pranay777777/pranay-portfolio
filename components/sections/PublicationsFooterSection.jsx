@@ -8,7 +8,7 @@ import { gsap } from '@/lib/gsap'
 import {
   FaGithub, FaLinkedinIn, FaInstagram, FaEnvelope,
 } from 'react-icons/fa'
-import { FiArrowUpRight, FiChevronDown } from 'react-icons/fi'
+import { FiArrowUpRight } from 'react-icons/fi'
 import profile from '@/data/profile.json'
 import content from '@/data/content.json'
 import styles from '@/styles/sections/PublicationsFooterSection.module.css'
@@ -357,10 +357,6 @@ export default function PublicationsFooterSection() {
                   </Fragment>
                 )
               })}
-            </div>
-            <div className={styles.mobileScrollHint} aria-hidden>
-              <FiChevronDown size={18} />
-              <span className={styles.mobileScrollText}>Scroll to explore</span>
             </div>
           </div>
 
