@@ -188,7 +188,7 @@ export default function VideoIntro() {
         set({ scale: 1, borderRadius: 0, filter: 'none' })
         return
       }
-      const blur = canBlur ? ` blur(${(6 * p).toFixed(2)}px)` : ''
+      const blur = canBlur ? ` blur(${(3 * p).toFixed(2)}px)` : ''   // capped at 3 px: 6 px caused long frames
       set({
         scale:        1 - 0.08 * p,
         borderRadius: 24 * p,
