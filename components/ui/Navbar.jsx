@@ -38,6 +38,7 @@ export default function Navbar() {
   const [time,    setTime]    = useState('')   // '' on SSR - avoids hydration mismatch
   const [onIntro, setOnIntro] = useState(true)
   const [onDark,  setOnDark]  = useState(false)
+  const [onHero,  setOnHero]  = useState(false)
   const [menuOpen, setMenuOpen] = useState(false)
   const headerRef   = useRef(null)
   const lastY       = useRef(0)
@@ -69,6 +70,7 @@ export default function Navbar() {
       const sectionIdx = Math.round(currentY / vh)
       setOnIntro(currentY < vh * 0.8)
       setOnDark(sectionIdx >= 3)
+      setOnHero(sectionIdx === 1)
 
       if (delta > 8 && !hidden.current) {
         gsap.to(headerRef.current, { y: '-100%', duration: 0.35, ease: 'power2.inOut' })
@@ -93,7 +95,7 @@ export default function Navbar() {
 
   return (
     <>
-      <header ref={headerRef} className={`${styles.header} ${onIntro ? styles.introMode : ''} ${onDark ? styles.darkMode : ''}`}>
+      <header ref={headerRef} className={`${styles.header} ${onIntro ? styles.introMode : ''} ${onDark ? styles.darkMode : ''} ${onHero ? styles.heroMode : ''}`}>
         <span className={styles.time}>INDIA TIME - {time}</span>
 
         <NavigationMenu className={styles.navMenu}>
