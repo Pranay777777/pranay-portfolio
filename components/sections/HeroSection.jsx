@@ -6,6 +6,7 @@ import dynamic from 'next/dynamic'
 import { FaGithub, FaLinkedinIn, FaInstagram } from 'react-icons/fa'
 import { FiArrowUpRight } from 'react-icons/fi'
 import { gsap } from '@/lib/gsap'
+import { subscribeIntroProgress, prefersReducedMotion } from '@/lib/introProgress'
 
 import profile from '@/data/profile.json'
 import content from '@/data/content.json'
@@ -28,12 +29,15 @@ function splitTagline(text, highlight) {
   }, [])
 }
 
+// Scroll-linked entrance (by intro progress p): [start, span] for greeting, name, pills
+const RISE = [[0.35, 0.4], [0.45, 0.4], [0.55, 0.4]]
+const riseEase = gsap.parseEase('power2.out')
+
 export default function HeroSection() {
   const sectionRef     = useRef(null)
-  const greetRef       = useRef(null)
-  const roleRef        = useRef(null)
-  const firstName      = useRef(null)
-  const lastName       = useRef(null)
+  const stageRef       = useRef(null)
+  const greetingRef    = useRef(null)
+  const nameBlockRef   = useRef(null)
   const photoRef       = useRef(null)
   const pillsRef       = useRef(null)
   const ctaBtnRef      = useRef(null)
@@ -53,11 +57,8 @@ export default function HeroSection() {
     const section = sectionRef.current
     if (!section) return
 
-    const fadeY = [
-      greetRef.current, roleRef.current,
-      firstName.current, lastName.current,
-      pillsRef.current, ctaBtnRef.current, statsRef.current,
-    ].filter(Boolean)
+    // Greeting, name and pills are driven by scroll (effect below); the rest plays once on entry
+    const fadeY = [ctaBtnRef.current, statsRef.current].filter(Boolean)
 
     const fadeX = [taglineCardRef.current, availCardRef.current].filter(Boolean)
 
@@ -67,12 +68,7 @@ export default function HeroSection() {
     if (socialRef.current) gsap.set(socialRef.current, { opacity: 0, x: -20 })
 
     const tl = gsap.timeline({ paused: true })
-    tl.to(greetRef.current,       { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' })
-      .to(roleRef.current,        { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.3')
-      .to(firstName.current,      { opacity: 1, y: 0, duration: 0.6,  ease: 'power2.out' }, '-=0.2')
-      .to(lastName.current,       { opacity: 1, y: 0, duration: 0.6,  ease: 'power2.out' }, '-=0.4')
-      .to(photoRef.current,       { opacity: 1, x: 0, duration: 0.7,  ease: 'power2.out' }, '-=0.5')
-      .to(pillsRef.current,       { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.3')
+    tl.to(photoRef.current,       { opacity: 1, x: 0, duration: 0.7,  ease: 'power2.out' })
       .to(ctaBtnRef.current,      { opacity: 1, y: 0, duration: 0.4,  ease: 'power2.out' }, '-=0.2')
       .to(statsRef.current,       { opacity: 1, y: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.2')
       .to(taglineCardRef.current, { opacity: 1, x: 0, duration: 0.5,  ease: 'power2.out' }, '-=0.5')
@@ -87,12 +83,41 @@ export default function HeroSection() {
     return () => { observer.disconnect(); tl.kill() }
   }, [])
 
+  // Scroll-linked reveal from the intro video (p: 0 = on the video, 1 = hero fully in place).
+  // The stage is held still (translated up against the section's own slide) and uncovered
+  // from the bottom with a clip-path; greeting, name and pills rise in, staggered by p.
+  // Reduced motion: a plain opacity crossfade instead.
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+    const reduced = prefersReducedMotion()
+    const setStage = gsap.quickSetter(stage, 'css')
+    const risers = [greetingRef.current, nameBlockRef.current, pillsRef.current]
+      .map(el => el && gsap.quickSetter(el, 'css'))
+
+    return subscribeIntroProgress(p => {
+      const y = -(1 - p) * window.innerHeight
+      if (reduced) {
+        setStage({ y, opacity: p, clipPath: 'none' })
+        return
+      }
+      setStage({ y, clipPath: p >= 1 ? 'none' : `inset(${((1 - p) * 100).toFixed(3)}% 0% 0% 0%)` })
+      risers.forEach((set, i) => {
+        if (!set) return
+        const [start, span] = RISE[i]
+        const t = riseEase(Math.min(Math.max((p - start) / span, 0), 1))
+        set({ y: 40 * (1 - t), opacity: t })
+      })
+    })
+  }, [])
+
   const sidebarSocials = SIDEBAR_LABELS
     .map(label => profile.socials.find(s => s.label === label))
     .filter(Boolean)
 
   return (
     <section ref={sectionRef} className={styles.section}>
+      <div ref={stageRef} className={styles.stage}>
 
       <HeroBackground />
 
@@ -138,15 +163,15 @@ export default function HeroSection() {
       <div className={styles.content}>
 
         {/* Greeting */}
-        <div className={styles.greeting}>
-          <p ref={greetRef} className={styles.greetText}>{"Hi, I'm"}</p>
-          <p ref={roleRef}  className={styles.roleText}>{profile.roles.short}</p>
+        <div ref={greetingRef} className={styles.greeting}>
+          <p className={styles.greetText}>{"Hi, I'm"}</p>
+          <p className={styles.roleText}>{profile.roles.short}</p>
         </div>
 
         {/* Stacked Name */}
-        <div className={styles.nameBlock}>
-          <p ref={firstName} className={styles.name}>{profile.name.first}</p>
-          <p ref={lastName}  className={styles.name}>{profile.name.last}</p>
+        <div ref={nameBlockRef} className={styles.nameBlock}>
+          <p className={styles.name}>{profile.name.first}</p>
+          <p className={styles.name}>{profile.name.last}</p>
         </div>
 
         {/* Tag Pills */}
@@ -199,6 +224,7 @@ export default function HeroSection() {
         )}
       </div>
 
+      </div>
     </section>
   )
 }

@@ -3,6 +3,8 @@
 import { useEffect, useRef, useState } from 'react'
 import dynamic from 'next/dynamic'
 import { gsap } from '@/lib/gsap'
+import { subscribeIntroProgress, prefersReducedMotion } from '@/lib/introProgress'
+import { watchSectionVisibility } from '@/lib/sectionVisibility'
 import profile from '@/data/profile.json'
 import content from '@/data/content.json'
 import styles from '@/styles/sections/VideoIntro.module.css'
@@ -25,6 +27,7 @@ function skipIfOnIntro() {
 }
 
 export default function VideoIntro() {
+  const stageRef      = useRef(null)
   const videoRef      = useRef(null)
   const bgCanvasRef   = useRef(null)
   const greetRef      = useRef(null)
@@ -129,18 +132,67 @@ export default function VideoIntro() {
       }
     }
 
-    function start() {
-      draw()
-      intervalId = setInterval(draw, 200)
+    let loaded = false
+    let visible = true
+    function sync() {
+      clearInterval(intervalId)
+      intervalId = undefined
+      if (loaded && visible) { draw(); intervalId = setInterval(draw, 200) }
     }
+    function onLoaded() { loaded = true; sync() }
 
-    if (v.readyState >= 2) start()
-    else v.addEventListener('loadeddata', start, { once: true })
+    if (v.readyState >= 2) onLoaded()
+    else v.addEventListener('loadeddata', onLoaded, { once: true })
+
+    // Stop redrawing while the hero covers the intro
+    const unwatch = watchSectionVisibility(c, isVisible => { visible = isVisible; sync() })
 
     return () => {
       clearInterval(intervalId)
-      v.removeEventListener('loadeddata', start)
+      unwatch()
+      v.removeEventListener('loadeddata', onLoaded)
     }
+  }, [])
+
+  // Pause the video while the hero covers it; resume when scrolling back (if it was playing)
+  useEffect(() => {
+    const v = videoRef.current
+    if (!v) return
+    let resumeOnShow = false
+    return watchSectionVisibility(v, isVisible => {
+      if (!isVisible) {
+        if (!v.paused && !v.ended) { resumeOnShow = true; v.pause() }
+      } else if (resumeOnShow) {
+        resumeOnShow = false
+        playWithFallback()
+      }
+    })
+  }, [])
+
+  // Scroll-linked hand-off to the hero: the video "screen" recedes as p goes 0 → 1
+  useEffect(() => {
+    const stage = stageRef.current
+    if (!stage) return
+    if (prefersReducedMotion()) return   // hero simply crossfades over it (see HeroSection)
+
+    // Blur is the expensive part: desktop only, and skipped on low-end hardware
+    const canBlur = window.matchMedia('(min-width: 768px)').matches
+      && (navigator.hardwareConcurrency ?? 8) > 4
+      && (navigator.deviceMemory ?? 8) > 4
+    const set = gsap.quickSetter(stage, 'css')
+
+    return subscribeIntroProgress(p => {
+      if (p === 0) {
+        set({ scale: 1, borderRadius: 0, filter: 'none' })
+        return
+      }
+      const blur = canBlur ? ` blur(${(6 * p).toFixed(2)}px)` : ''
+      set({
+        scale:        1 - 0.08 * p,
+        borderRadius: 24 * p,
+        filter:       `brightness(${(1 - 0.6 * p).toFixed(3)})${blur}`,
+      })
+    })
   }, [])
 
   function togglePlay() {
@@ -171,6 +223,7 @@ export default function VideoIntro() {
 
   return (
     <section className={styles.section}>
+      <div ref={stageRef} className={styles.stage}>
 
       {/* 1 - Blurred ambient background (tiny canvas — no second video decoder) */}
       <canvas
@@ -270,6 +323,7 @@ export default function VideoIntro() {
         <span className={styles.scrollLine} />
       </button>
 
+      </div>
     </section>
   )
 }

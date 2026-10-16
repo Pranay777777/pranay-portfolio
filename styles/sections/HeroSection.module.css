@@ -4,13 +4,23 @@
   top: 0;
   height: 100vh;
   z-index: 2;
+  /* visible: the stage is held in place (translated up) while the section slides in */
+  overflow: visible;
+}
+
+/* Everything (incl. the background) lives on the stage, which the
+   scroll-linked hand-off translates and reveals with a clip-path */
+.stage {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
   background: linear-gradient(
     to bottom,
     var(--hero-start) 0%,
     var(--hero-mid) 55%,
     var(--hero-end) 100%
   );
-  overflow: hidden;
+  will-change: transform;
 }
 
 /* ─── Photo ─────────────────────────────────────────────── */
