@@ -1,0 +1,35 @@
+/* ── Data-graph backdrop (publications) ─────────── */
+.root {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  background: var(--surface-black);
+}
+
+.root canvas {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+/* No WebGL: a still, token-based glow instead of the graph */
+.fallback {
+  background:
+    radial-gradient(ellipse at 72% 38%, color-mix(in srgb, var(--accent) 10%, transparent) 0%, transparent 55%),
+    radial-gradient(ellipse at 22% 78%, color-mix(in srgb, var(--surface-amber) 5%, transparent) 0%, transparent 50%),
+    var(--surface-black);
+}
+
+.lost canvas {
+  visibility: hidden;
+}
+
+/* Legibility scrim between the graph and the publication text */
+.shade {
+  position: absolute;
+  inset: 0;
+  background:
+    radial-gradient(ellipse at 50% 55%, color-mix(in srgb, var(--surface-black) 55%, transparent) 0%, transparent 75%),
+    color-mix(in srgb, var(--surface-black) 30%, transparent);
+}

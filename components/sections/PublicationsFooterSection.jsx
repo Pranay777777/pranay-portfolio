@@ -3,6 +3,7 @@
 
 import { useEffect, useRef, useSyncExternalStore, Fragment } from 'react'
 import Image from 'next/image'
+import dynamic from 'next/dynamic'
 
 import { gsap } from '@/lib/gsap'
 import {
@@ -12,6 +13,8 @@ import { FiArrowUpRight } from 'react-icons/fi'
 import profile from '@/data/profile.json'
 import content from '@/data/content.json'
 import styles from '@/styles/sections/PublicationsFooterSection.module.css'
+
+const DataGraphBackground = dynamic(() => import('@/components/three/DataGraphBackground'), { ssr: false })
 
 const PUBS = profile.publications
 
@@ -61,6 +64,9 @@ export default function PublicationsFooterSection() {
   // image
   const imageWrapRef    = useRef(null)
   const imageOverlayRef = useRef(null)
+
+  // publications-only data-graph backdrop (fades out with the publication text)
+  const pubBackdropRef  = useRef(null)
 
   // publication content
   const pubContentRef = useRef(null)
@@ -150,6 +156,9 @@ export default function PublicationsFooterSection() {
       const pubFadeEnd = isMobile ? 0.25 : 0.28
       const pubFade = 1 - Math.max(0, Math.min(1, p / pubFadeEnd))
       gsap.set(pubContentRef.current, { opacity: pubFade, pointerEvents: pubFade > 0.05 ? 'auto' : 'none' })
+      // The backdrop covers the photo while the publications are up, then crossfades
+      // to it for the interstitial (the photo/interstitial/footer logic is unchanged)
+      gsap.set(pubBackdropRef.current, { opacity: pubFade })
 
       const vw = window.innerWidth
 
@@ -243,6 +252,11 @@ export default function PublicationsFooterSection() {
             priority={false}
           />
           <div ref={imageOverlayRef} className={styles.imageOverlay} />
+        </div>
+
+        {/* ── Publications backdrop: Three.js data graph (publications phase only) ── */}
+        <div ref={pubBackdropRef} className={styles.pubBackdrop}>
+          <DataGraphBackground />
         </div>
 
         {/* ── Publication content (right of image) ── */}
